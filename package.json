@@ -4,8 +4,9 @@
   "description": "영화 검색 사이트",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --mode development",
-    "build": "webpack --mode production"
+    "dev:webpack": "webpack-dev-server --mode development",
+    "build": "webpack --mode production",
+    "vercel": "vercel dev"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
     "autoprefixer": "^10.4.13",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.2",
+    "dotenv-webpack": "^8.0.1",
     "eslint": "^8.29.0",
     "eslint-plugin-vue": "^9.8.0",
     "html-webpack-plugin": "^5.5.0",
