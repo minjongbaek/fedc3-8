@@ -94,7 +94,7 @@ watch(() => route.query, () => {
         </RouterLink>
       </li>
     </ul>
-    <LoadingSpinner v-show="true || isLoading" />
+    <LoadingSpinner v-show="isLoading" />
   </div>
   <div
     v-else
