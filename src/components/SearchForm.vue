@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import _ from 'lodash'
-import LoadingSpinner from './loadingSpinner.vue'
+import LoadingSpinner from '~/components/LoadingSpinner'
 import { request } from '~/util/fetch'
 
 const $input = ref('')

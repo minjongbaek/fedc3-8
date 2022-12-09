@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted, onUpdated, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import LoadingSpinner from '../components/loadingSpinner.vue'
+import LoadingSpinner from '~/components/LoadingSpinner'
 import { request } from '~/util/fetch'
 
 const route = useRoute()
