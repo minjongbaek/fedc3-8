@@ -1,33 +1,30 @@
 <script setup>
 import { computed, onMounted, onUpdated, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { request } from '~/util/fetch'
 import LoadingSpinner from '~/components/LoadingSpinner.vue'
-import { request } from '~/util/fetch.js'
 
 const route = useRoute()
-const keyword = computed(() => route.query.keyword)
+
+const $movieItems = ref([])
+const $lastMovieItem = computed(() => $movieItems.value[$movieItems.value.length - 1])
 
 const movies = ref([])
 const page = ref(1)
 const totalItemCount = ref(0)
-
-const isNextPage = computed(() => movies.value.length < totalItemCount.value)
 const isLoading = ref(false)
 
+const keyword = computed(() => route.query.keyword)
+const isNextPage = computed(() => movies.value.length < totalItemCount.value)
 
-const $movieItems = ref([])
 let observer = null
 
 const fetchMovies = async () => {
   isLoading.value = true
-
   const res = await request('search', { s: keyword.value, page: page.value })
-
   const { Search, totalResults, Response } = res
   if (Response === 'True') {
-    const $lastItems = $movieItems.value[$movieItems.value.length - 1]
-    if ($lastItems && observer) observer.unobserve($lastItems)
-
+    unobserve()
     movies.value.push(...Search)
     totalItemCount.value = totalResults
     page.value += 1
@@ -39,11 +36,26 @@ const fetchMovies = async () => {
   isLoading.value = false
 }
 
+const observe = () => {
+  if (!observer) return
+  if ($lastMovieItem.value) observer.observe($lastMovieItem.value)
+}
+
+const unobserve = () => {
+  if (!observer) return
+  if ($lastMovieItem.value) observer.unobserve($lastMovieItem.value)
+}
+
 const intersectionHandler = (entry) => {
   if (!entry.isIntersecting) return
   if (!isNextPage.value) return
   fetchMovies()
 }
+
+watch(() => route.query, () => {
+  movies.value.splice(0)
+  fetchMovies()
+})
 
 onMounted(() => {
   fetchMovies()
@@ -54,24 +66,16 @@ onMounted(() => {
       root: null,
       threshold: 0.5
     })
-    if (movies.value.length !== 0) observer.observe($movieItems.value[$movieItems.value.length - 1])
+    observe()
   } catch (error) {
     console.error(error)
   }
 })
 
 onUpdated(() => {
-  if (!observer) return
-  if (movies.value.length !== 0) observer.observe($movieItems.value[$movieItems.value.length - 1])
+  observe()
 })
-
-watch(() => route.query, () => {
-  movies.value.splice(0)
-  fetchMovies()
-})
-
 </script>
-
 
 <template>
   <div v-if="(movies.length >= 1)">

@@ -1,6 +1,3 @@
-<script setup>
-</script>
-
 <template>
   <div class="spinner__wrap">
     <div class="d-flex justify-content-center">

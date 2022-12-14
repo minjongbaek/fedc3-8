@@ -1,13 +1,16 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { request } from '~/util/fetch'
 import LoadingSpinner from '~/components/LoadingSpinner.vue'
-import { request } from '~/util/fetch.js'
 
 const route = useRoute()
-const id = computed(() => route.params.id)
+
 const movie = ref({})
 const isLoading = ref(false)
+
+const id = computed(() => route.params.id)
+const posterUrl = computed(() => movie.value?.Poster?.replace('SX300', 'SX700'))
 
 const fetchMovie = async () => {
   isLoading.value = true
@@ -16,21 +19,18 @@ const fetchMovie = async () => {
   isLoading.value = false
 }
 
-const posterUrl = computed(() => movie.value?.Poster?.replace('SX300', 'SX700'))
-
-onMounted(() => {
-  fetchMovie()
-})
+const onLoadHandler = ($event) => {
+  $event.target.src = posterUrl.value
+}
 
 watch(() => route.params, () => {
   fetchMovie()
 })
 
-const onLoadHandler = ($event) => {
-  $event.target.src = posterUrl.value
-}
+onMounted(() => {
+  fetchMovie()
+})
 </script>
-
 
 <template>
   <div
@@ -83,10 +83,10 @@ const onLoadHandler = ($event) => {
 
 <style scoped lang="scss">
 .loading__spinner__wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100% - 56px);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(0, -50%);
 }
 
 .movie__detail__page {

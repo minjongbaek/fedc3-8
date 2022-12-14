@@ -1,8 +1,6 @@
 <script setup>
 import SearchForm from '~/components/SearchForm.vue'
-
 </script>
-
 
 <template>
   <div class="home__page">

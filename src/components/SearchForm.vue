@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { request } from '~/util/fetch'
 import _ from 'lodash'
 import LoadingSpinner from '~/components/LoadingSpinner.vue'
-import { request } from '~/util/fetch.js'
 
 const $input = ref('')
 
@@ -17,13 +17,12 @@ const isLoading = ref(false)
 
 const onKeydownHandler = _.debounce(($event) => {
   if ($event.key === 'Enter') return
+  movies.value.splice(0)
   fetchMovies()
-}, 500)
+}, 300)
 
 const fetchMovies = async () => {
   isLoading.value = true
-  movies.value.splice(0)
-  // const res = await request(`s=${keyword.value}`)
   const res = await request('search', { s: keyword.value })
   const { Search, Response } = res
   if (Response === 'True') movies.value.push(...Search)
@@ -37,8 +36,8 @@ const onFocusHandler = ($event) => {
   // 이를 해결하기 위한 코드
   if (relatedTarget?.tagName === 'A') {
     const { pathname, search } = relatedTarget
-    if (pathname.indexOf('/search') === 0) routePush(pathname + search)
-    if (pathname.indexOf('/movie') === 0) routePush(pathname)
+    if (pathname.indexOf('/search') === 0) router.push(pathname + search)
+    if (pathname.indexOf('/movie') === 0) router.push(pathname)
   }
   if (type === 'focusin') {
     isFocusInput.value = true
@@ -47,16 +46,11 @@ const onFocusHandler = ($event) => {
   }
 }
 
-const routePush = (path) => {
-  router.push(path)
-}
-
 const onSubmit = () => {
   $input.value.blur()
   if (route.query.keyword === keyword.value) return
-  routePush(`/search?keyword=${keyword.value}`)
+  router.push(`/search?keyword=${keyword.value}`)
 }
-
 </script>
 
 <template>
@@ -81,12 +75,11 @@ const onSubmit = () => {
         v-show="isLoading"
         class="w-100" />
       <ul class="search__preview__list">
-        <li 
+        <li
           v-for="movie in movies"
           :key="movie.imdbID"
           class="search__preview__item border border-secondary">
-          <RouterLink
-            :to="`/movie/${movie.imdbID}`">
+          <RouterLink :to="`/movie/${movie.imdbID}`">
             <div class="movie__poster">
               <img :src="movie.Poster" />
             </div>
@@ -97,8 +90,7 @@ const onSubmit = () => {
           </RouterLink>
         </li>
       </ul>
-      <div
-        class="w-100 text-center">
+      <div class="w-100 text-center">
         <RouterLink :to="`/search?keyword=${keyword}`">
           More Search
         </RouterLink>

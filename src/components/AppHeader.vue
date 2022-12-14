@@ -1,8 +1,6 @@
 <script setup>
 import SearchForm from '~/components/SearchForm.vue'
-
 </script>
-
 
 <template>
   <header>
@@ -27,14 +25,15 @@ import SearchForm from '~/components/SearchForm.vue'
 </template>
 
 <style scoped lang="scss">
-  .nav__item {
-    font-size: 2rem;
-  }
-  .search__form__wrap {
-    width: 480px;
-    position: absolute;
-    right: 1rem;
-    top: 25%;
-    z-index: 10;
-  }
+.nav__item {
+  font-size: 2rem;
+}
+
+.search__form__wrap {
+  width: 480px;
+  position: absolute;
+  right: 1rem;
+  top: 25%;
+  z-index: 10;
+}
 </style>
