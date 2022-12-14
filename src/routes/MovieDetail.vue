@@ -1,8 +1,8 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import LoadingSpinner from '~/components/LoadingSpinner'
-import { request } from '~/util/fetch'
+import LoadingSpinner from '~/components/LoadingSpinner.vue'
+import { request } from '~/util/fetch.js'
 
 const route = useRoute()
 const id = computed(() => route.params.id)
@@ -11,7 +11,7 @@ const isLoading = ref(false)
 
 const fetchMovie = async () => {
   isLoading.value = true
-  const res = await request(`i=${id.value}&plot=full`)
+  const res = await request('movie', { i: id.value, plot: 'full' })
   movie.value = { ...res }
   isLoading.value = false
 }
@@ -82,7 +82,6 @@ const onLoadHandler = ($event) => {
 </template>
 
 <style scoped lang="scss">
-
 .loading__spinner__wrap {
   display: flex;
   justify-content: center;
@@ -110,9 +109,8 @@ const onLoadHandler = ($event) => {
 }
 
 .movie__info {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 </style>

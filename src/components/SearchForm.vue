@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import _ from 'lodash'
-import LoadingSpinner from '~/components/LoadingSpinner'
-import { request } from '~/util/fetch'
+import LoadingSpinner from '~/components/LoadingSpinner.vue'
+import { request } from '~/util/fetch.js'
 
 const $input = ref('')
 
@@ -23,7 +23,8 @@ const onKeydownHandler = _.debounce(($event) => {
 const fetchMovies = async () => {
   isLoading.value = true
   movies.value.splice(0)
-  const res = await request(`s=${keyword.value}`)
+  // const res = await request(`s=${keyword.value}`)
+  const res = await request('search', { s: keyword.value })
   const { Search, Response } = res
   if (Response === 'True') movies.value.push(...Search)
   isLoading.value = false

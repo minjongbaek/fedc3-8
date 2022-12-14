@@ -1,5 +1,5 @@
 <script setup>
-import AppHeader from './components/AppHeader'
+import AppHeader from './components/AppHeader.vue'
 import './scss/main.scss'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'

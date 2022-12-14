@@ -1,16 +1,24 @@
-const API_END_POINT = process.env.API_END_POINT
-const API_KEY = process.env.API_KEY
+const API_END_POINT = import.meta.env.VITE_API_END_POINT
+const API_KEY = import.meta.env.VITE_API_KEY
 
-export const request = async (url) => {
+export const request = async (path, queryString) => {
   try {
-    const res = await fetch(`${API_END_POINT}?apikey=${API_KEY}&${url}`)
+    const params = new URLSearchParams({ ...queryString })
+    let url = `/api/${path}?${params}`
+
+    if (import.meta.env.DEV) {
+      params.append('apikey', API_KEY)
+      url = `${API_END_POINT}?${params}`
+    }
+
+    const res = await fetch(url)
 
     if (!res.ok) {
       throw new Error('API Call Error')
     }
 
     return await res.json()
-  } catch (e) {
-    alert(e.message)
+  } catch (error) {
+    console.error(error)
   }
 }

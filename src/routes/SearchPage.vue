@@ -1,8 +1,8 @@
 <script setup>
 import { computed, onMounted, onUpdated, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import LoadingSpinner from '~/components/LoadingSpinner'
-import { request } from '~/util/fetch'
+import LoadingSpinner from '~/components/LoadingSpinner.vue'
+import { request } from '~/util/fetch.js'
 
 const route = useRoute()
 const keyword = computed(() => route.query.keyword)
@@ -21,7 +21,7 @@ let observer = null
 const fetchMovies = async () => {
   isLoading.value = true
 
-  const res = await request(`s=${keyword.value}&page=${page.value}`)
+  const res = await request('search', { s: keyword.value, page: page.value })
 
   const { Search, totalResults, Response } = res
   if (Response === 'True') {

@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomePage from './HomePage'
-import SearchPage from './SearchPage'
-import MovieDetail from './MovieDetail'
-import NotFound from './NotFound'
+import HomePage from './HomePage.vue'
+import SearchPage from './SearchPage.vue'
+import MovieDetail from './MovieDetail.vue'
+import NotFound from './NotFound.vue'
 
 export default createRouter({
   history: createWebHistory(),
