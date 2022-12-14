@@ -30,10 +30,18 @@ import SearchForm from '~/components/SearchForm.vue'
 }
 
 .search__form__wrap {
-  width: 480px;
+  width: calc(50% - 10px);
   position: absolute;
   right: 1rem;
   top: 25%;
   z-index: 10;
+
+  @media screen and (min-width:576px) {
+    width: calc(50% - 10px);
+  }
+
+  @media screen and (min-width:1200px) {
+    width: calc(25% - 10px);
+  }
 }
 </style>

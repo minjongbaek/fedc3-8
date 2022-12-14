@@ -27,16 +27,23 @@ import SearchForm from '~/components/SearchForm.vue'
   justify-content: center;
   align-items: center;
   gap: 10px;
-  
+
   &__title {
     margin-top: 50px;
     font-size: 4rem;
   }
 
   .search__form__wrap {
-    width: 600px;
+    width: calc(80% - 10px);
     padding: 2px;
+
+    @media screen and (min-width:576px) {
+      width: calc(80% - 10px);
+    }
+
+    @media screen and (min-width:1200px) {
+      width: 600px
+    }
   }
 }
-
 </style>

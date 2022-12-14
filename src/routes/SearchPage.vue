@@ -119,11 +119,27 @@ onUpdated(() => {
   gap: 10px;
 
   .movie__item {
-    width: calc(10% - 10px);
+    width: calc(100% - 30px);
     display: flex;
     flex-direction: column;
     box-shadow: 1px 1px 5px 0;
     border-radius: 5px;
+
+    @media screen and (min-width:576px) {
+      width: calc(50% - 10px);
+    }
+
+    @media screen and (min-width:768px) {
+      width: calc(25% - 10px);
+    }
+
+    @media screen and (min-width:992px) {
+      width: calc(20% - 10px);
+    }
+
+    @media screen and (min-width:1200px) {
+      width: calc(10% - 10px);
+    }
 
     &:hover {
       cursor: pointer;
@@ -163,6 +179,7 @@ onUpdated(() => {
     }
   }
 }
+
 .no-result {
   margin-top: 20px;
   width: 100%;
