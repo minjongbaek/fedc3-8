@@ -39,11 +39,7 @@ const onFocusHandler = (event) => {
     if (pathname.indexOf('/search') === 0) router.push(pathname + search)
     if (pathname.indexOf('/movie') === 0) router.push(pathname)
   }
-  if (type === 'focusin') {
-    isFocusInput.value = true
-  } else {
-    isFocusInput.value = false
-  }
+  isFocusInput.value = type === 'focusin'
 }
 
 const onSubmit = () => {
