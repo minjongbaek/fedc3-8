@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { request } from '~/util/fetch'
-import _ from 'lodash'
+import { debounce } from 'lodash-es'
 import LoadingSpinner from '~/components/LoadingSpinner.vue'
 
 const $input = ref('')
@@ -15,7 +15,7 @@ const keyword = ref('')
 const isFocusInput = ref(false)
 const isLoading = ref(false)
 
-const onKeydownHandler = _.debounce(($event) => {
+const onKeydownHandler = debounce(($event) => {
   if ($event.key === 'Enter') return
   movies.value.splice(0)
   fetchMovies()
@@ -98,7 +98,6 @@ const onSubmit = () => {
     </div>
   </div>
 </template>
-
 
 <style scoped lang="scss">
 input {
