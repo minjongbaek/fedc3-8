@@ -13,6 +13,7 @@ const movies = ref([])
 const page = ref(1)
 const totalItemCount = ref(0)
 const isLoading = ref(false)
+const isResult = ref(true)
 
 const keyword = computed(() => route.query.keyword)
 const isNextPage = computed(() => movies.value.length < totalItemCount.value)
@@ -27,10 +28,12 @@ const fetchMovies = async () => {
     unobserve()
     movies.value.push(...Search)
     totalItemCount.value = totalResults
+    isResult.value = true
     page.value += 1
   } else {
     movies.value.splice(0)
     totalItemCount.value = 0
+    isResult.value = false
     page.value = 1
   }
   isLoading.value = false
@@ -78,7 +81,7 @@ onUpdated(() => {
 </script>
 
 <template>
-  <div v-if="(movies.length >= 1)">
+  <div v-if="isResult">
     <ul class="movie__list">
       <li
         v-for="movie in movies"
