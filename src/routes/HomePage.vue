@@ -42,7 +42,7 @@ import SearchForm from '~/components/SearchForm.vue'
     }
 
     @media screen and (min-width:1200px) {
-      width: 600px
+      width: 600px;
     }
   }
 }
