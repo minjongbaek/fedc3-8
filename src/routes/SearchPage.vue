@@ -6,8 +6,8 @@ import LoadingSpinner from '~/components/LoadingSpinner.vue'
 
 const route = useRoute()
 
-const $movieItems = ref([])
-const $lastMovieItem = computed(() => $movieItems.value[$movieItems.value.length - 1])
+const movieItemsElement = ref([])
+const lastMovieItemElement = computed(() => movieItemsElement.value[movieItemsElement.value.length - 1])
 
 const movies = ref([])
 const page = ref(1)
@@ -38,12 +38,12 @@ const fetchMovies = async () => {
 
 const observe = () => {
   if (!observer) return
-  if ($lastMovieItem.value) observer.observe($lastMovieItem.value)
+  if (lastMovieItemElement.value) observer.observe(lastMovieItemElement.value)
 }
 
 const unobserve = () => {
   if (!observer) return
-  if ($lastMovieItem.value) observer.unobserve($lastMovieItem.value)
+  if (lastMovieItemElement.value) observer.unobserve(lastMovieItemElement.value)
 }
 
 const intersectionHandler = (entry) => {
@@ -82,7 +82,7 @@ onUpdated(() => {
     <ul class="movie__list">
       <li
         v-for="movie in movies"
-        ref="$movieItems"
+        ref="movieItemsElement"
         :key="movie.imdbID"
         class="movie__item">
         <RouterLink :to="`/movie/${movie.imdbID}`">

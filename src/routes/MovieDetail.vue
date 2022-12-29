@@ -19,8 +19,8 @@ const fetchMovie = async () => {
   isLoading.value = false
 }
 
-const onLoadHandler = ($event) => {
-  $event.target.src = posterUrl.value
+const onLoadHandler = (event) => {
+  event.target.src = posterUrl.value
 }
 
 watch(() => route.params, () => {

@@ -5,7 +5,7 @@ import { request } from '~/util/fetch'
 import { debounce } from 'lodash-es'
 import LoadingSpinner from '~/components/LoadingSpinner.vue'
 
-const $input = ref('')
+const inputElement = ref('')
 
 const router = useRouter()
 const route = useRoute()
@@ -15,8 +15,8 @@ const keyword = ref('')
 const isFocusInput = ref(false)
 const isLoading = ref(false)
 
-const onKeydownHandler = debounce(($event) => {
-  if ($event.key === 'Enter') return
+const onKeydownHandler = debounce((event) => {
+  if (event.key === 'Enter') return
   movies.value.splice(0)
   fetchMovies()
 }, 300)
@@ -29,8 +29,8 @@ const fetchMovies = async () => {
   isLoading.value = false
 }
 
-const onFocusHandler = ($event) => {
-  const { type, relatedTarget } = $event
+const onFocusHandler = (event) => {
+  const { type, relatedTarget } = event
 
   // RouterLink 태그로 생성된 a 태그를 클릭했을 때 focusout 되면서 a 태그가 DOM TREE 에서 제거되어 페이지 이동이 안되는 이슈가 있음.
   // 이를 해결하기 위한 코드
@@ -47,7 +47,7 @@ const onFocusHandler = ($event) => {
 }
 
 const onSubmit = () => {
-  $input.value.blur()
+  inputElement.value.blur()
   if (route.query.keyword === keyword.value) return
   router.push(`/search?keyword=${keyword.value}`)
 }
@@ -59,7 +59,7 @@ const onSubmit = () => {
       class="d-flex"
       @submit.prevent="onSubmit">
       <input
-        ref="$input"
+        ref="inputElement"
         v-model.trim="keyword"
         class="form-control shadow-none border-0"
         type="search"
