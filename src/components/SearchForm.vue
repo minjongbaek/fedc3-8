@@ -32,8 +32,6 @@ const fetchMovies = async () => {
 const onFocusHandler = (event) => {
   const { type, relatedTarget } = event
 
-  // RouterLink 태그로 생성된 a 태그를 클릭했을 때 focusout 되면서 a 태그가 DOM TREE 에서 제거되어 페이지 이동이 안되는 이슈가 있음.
-  // 이를 해결하기 위한 코드
   if (relatedTarget?.tagName === 'A') {
     const { pathname, search } = relatedTarget
     if (pathname.indexOf('/search') === 0) router.push(pathname + search)
